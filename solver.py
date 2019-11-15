@@ -20,12 +20,12 @@ def verlet(t,h,y,dy,d2y,Func):
     dy_next = dy1_2 + (h1_2 * d2y_next)
     return (y_next,dy_next,d2y_next)
 
-def verlet2DNewton(m ,h,rx,ry, vx, vy , ax, ay, Forces):
+def verlet2DNewton(m ,h,rx,ry, vx, vy , ax, ay, Forces,k):
     h1_2 = 0.5 * h
     vx1_2 = vx + (h1_2 * ax) ; vy1_2 = vy + (h1_2 * ay)
     rx_next = rx + (h * vx1_2) ; ry_next = ry + (h * vy1_2)
 
-    (fx,fy,Epot) = Forces(m,rx_next,ry_next,vx1_2,vy1_2)
+    (fx,fy,Epot) = Forces(m,rx_next,ry_next,vx1_2,vy1_2,k)
     ax_next = fx/m ; ay_next = fy/m
 
     vx_next = vx1_2 + (h1_2 * ax_next) ; vy_next = vy1_2 + (h1_2 * ay_next)

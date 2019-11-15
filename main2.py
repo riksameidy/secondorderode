@@ -15,10 +15,24 @@ w0 = g/l
 def Func(t,u,du):
     return -w0 * sin(u) - k*du
 
+res_euler = []
 res_eulercromer = []
 res_verlet = []
 t = []
 step = int((t_akhir - t0) / h)
+
+for i in range(step):
+    tm = (i + 1) * h
+    (u_next, du_next) = euler(tm, h, u0, du0, Func)
+    res_euler.append(u_next)
+    t.append(tm)
+    u0 = u_next
+    du0 = du_next
+
+t = []
+u0 = 0.5 * pi
+du0 = 0
+d2u0 = Func(t0,u0,du0)
 
 for i in range(step):
     tm = (i + 1) * h
@@ -43,7 +57,8 @@ for i in range(step):
     d2u0 = d2u_next
 
 plt.title('Non Linear Pendulum h =0.01')
-plt.plot(t,res_eulercromer,color='r', label = 'Euler Cromer')
+plt.plot(t,res_euler,color='r', label = 'Euler')
+plt.plot(t,res_eulercromer,color='g', label = 'Euler Cromer')
 plt.plot(t,res_verlet,color='b', label = 'Verlet')
 plt.xlabel('t')
 plt.ylabel('u(t)')
